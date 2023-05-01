@@ -19,7 +19,7 @@ export const Modal = ({
       <div className="flex h-96 w-96 max-w-full flex-col rounded-2xl bg-white p-3 shadow-xl">
         <IoCloseOutline
           size={32}
-          className="cursor-pointer self-end hover:scale-125"
+          className="cursor-pointer self-end hover:scale-110"
           onClick={close}
         />
         {children}
