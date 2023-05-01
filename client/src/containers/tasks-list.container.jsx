@@ -7,7 +7,7 @@ import { Button, TaskCard } from "../components";
 import { AppContext } from "../contexts";
 
 export const TasksList = ({ title, id }) => {
-  const { openAddTaskModal } = useContext(AppContext);
+  const { openNewTaskModal } = useContext(AppContext);
   const { data: tasks } = useTasksQuery(id);
 
   return (
@@ -18,14 +18,19 @@ export const TasksList = ({ title, id }) => {
       <div className="flex grow flex-col gap-1 overflow-auto scroll-smooth p-1">
         {tasks?.length &&
           tasks.map(({ id, title, description }) => (
-            <TaskCard key={id} title={title} description={description} />
+            <TaskCard
+              key={id}
+              id={id}
+              title={title}
+              description={description}
+            />
           ))}
       </div>
       <div className=" border-t pt-2">
         <Button
           icon={<IoAddOutline size={24} className="mr-2 text-white" />}
-          text="Add a card"
-          onClick={openAddTaskModal}
+          text="Add new task"
+          onClick={openNewTaskModal(id)}
         ></Button>
       </div>
     </div>

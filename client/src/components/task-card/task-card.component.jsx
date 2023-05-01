@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { IoCreate } from "react-icons/io5";
 import { AppContext } from "../../contexts";
 
-export const TaskCard = ({ title, description }) => {
+export const TaskCard = ({ id, title, description }) => {
   const { openEditTaskModal } = useContext(AppContext);
 
   return (
@@ -12,7 +12,7 @@ export const TaskCard = ({ title, description }) => {
         <IoCreate
           size={24}
           className="cursor-pointer text-gray-700 hover:scale-125 hover:text-gray-900"
-          onClick={openEditTaskModal}
+          onClick={openEditTaskModal(id)}
         />
       </div>
       <div className="border-b" />

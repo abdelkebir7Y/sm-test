@@ -1,28 +1,63 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer } from "react";
 
 export const AppContext = createContext();
 
-export const AppContextProvider = ({ children }) => {
-  const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
+const REDUCER_TYPES = {
+  OPEN_NEW_TASK_MODAL: "OPEN_NEW_TASK_MODAL",
+  CLOSE_NEW_TASK_MODAL: "CLOSE_NEW_TASK_MODAL",
+  OPEN_EDIT_TASK_MODAL: "OPEN_EDIT_TASK_MODAL",
+  CLOSE_EDIT_TASK_MODAL: "CLOSE_EDIT_TASK_MODAL",
+};
 
-  const toggleAddTaskModal = () => {
-    setShowAddTaskModal(!showAddTaskModal);
+const initialState = {
+  showAddTaskModal: false,
+  showEditTaskModal: false,
+  newTaskListId: null,
+  editTaskId: null,
+};
+
+const reducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case REDUCER_TYPES.OPEN_NEW_TASK_MODAL:
+      return { ...state, showAddTaskModal: true, newTaskListId: payload };
+    case REDUCER_TYPES.CLOSE_NEW_TASK_MODAL:
+      return { ...state, showAddTaskModal: false, newTaskListId: null };
+    case REDUCER_TYPES.OPEN_EDIT_TASK_MODAL:
+      return { ...state, showEditTaskModal: true, editTaskId: payload };
+    case REDUCER_TYPES.CLOSE_EDIT_TASK_MODAL:
+      return { ...state, showEditTaskModal: false, editTaskId: null };
+    default:
+      return state;
+  }
+};
+
+export const AppContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const openNewTaskModal = (listId) => () => {
+    dispatch({ type: REDUCER_TYPES.OPEN_NEW_TASK_MODAL, payload: listId });
   };
 
-  const toggleEditTaskModal = () => {
-    setShowEditTaskModal(!showEditTaskModal);
+  const closeNewTaskModal = () => {
+    dispatch({ type: REDUCER_TYPES.CLOSE_NEW_TASK_MODAL });
+  };
+
+  const openEditTaskModal = (taskId) => () => {
+    dispatch({ type: REDUCER_TYPES.OPEN_EDIT_TASK_MODAL, payload: taskId });
+  };
+
+  const closeEditTaskModal = () => {
+    dispatch({ type: REDUCER_TYPES.CLOSE_EDIT_TASK_MODAL });
   };
 
   return (
     <AppContext.Provider
       value={{
-        showAddTaskModal,
-        showEditTaskModal,
-        openAddTaskModal: toggleAddTaskModal,
-        closeAddTaskModal: toggleAddTaskModal,
-        openEditTaskModal: toggleEditTaskModal,
-        closeEditTaskModal: toggleEditTaskModal,
+        ...state,
+        openNewTaskModal,
+        closeNewTaskModal,
+        openEditTaskModal,
+        closeEditTaskModal,
       }}
     >
       {children}

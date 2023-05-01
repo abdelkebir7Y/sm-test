@@ -10,7 +10,8 @@ import { Button, Input, Modal, Textarea } from "../components";
 import { AppContext } from "../contexts";
 
 export const AddTask = () => {
-  const { showAddTaskModal, closeAddTaskModal } = useContext(AppContext);
+  const { showAddTaskModal, closeNewTaskModal, newTaskListId } =
+    useContext(AppContext);
   const queryClient = useQueryClient();
   const addTaskMutation = useAddTaskMutation();
 
@@ -26,10 +27,12 @@ export const AddTask = () => {
       {
         title,
         description,
-        listId: 1,
+        listId: newTaskListId,
       },
       {
         onSuccess() {
+          reset();
+          closeNewTaskModal();
           queryClient.refetchQueries(["tasks"]);
         },
       }
@@ -43,7 +46,7 @@ export const AddTask = () => {
   }, [showAddTaskModal, reset]);
 
   return (
-    <Modal visible={showAddTaskModal} close={closeAddTaskModal}>
+    <Modal visible={showAddTaskModal} close={closeNewTaskModal}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           placeholder="title"
