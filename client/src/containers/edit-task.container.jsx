@@ -14,7 +14,7 @@ export const EditTask = () => {
       <Textarea
         placeholder="description"
         label="Description"
-        maxlength="100"
+        maxLength="100"
         rows={5}
       />
       <div className="flex justify-between">

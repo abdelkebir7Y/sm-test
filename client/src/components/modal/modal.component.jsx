@@ -1,11 +1,7 @@
 import React from "react";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const Modal = ({
-  close = () => console.log("close"),
-  visible = true,
-  children,
-}) => {
+export const Modal = ({ close, visible = true, children }) => {
   if (!visible) {
     return null;
   }

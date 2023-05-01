@@ -15,7 +15,7 @@ export const TasksList = ({ title, id }) => {
       <div className="border-b pb-2">
         <h1 className="text-xl font-medium	">{title}</h1>
       </div>
-      <div className="grow p-1">
+      <div className="flex grow flex-col gap-1 overflow-auto scroll-smooth p-1">
         {tasks?.length &&
           tasks.map(({ id, title, description }) => (
             <TaskCard key={id} title={title} description={description} />
