@@ -7,9 +7,6 @@ module.exports = {
       fontFamily: {
         sans: ["Montserrat", ...defaultTheme.fontFamily.sans],
       },
-      backgroundImage: {
-        home: "url('./assets/images/background.png')",
-      },
     },
   },
   plugins: [],
