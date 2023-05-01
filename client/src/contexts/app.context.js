@@ -13,7 +13,7 @@ const initialState = {
   showAddTaskModal: false,
   showEditTaskModal: false,
   newTaskListId: null,
-  editTaskId: null,
+  taskToUpdate: {},
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -23,9 +23,9 @@ const reducer = (state = initialState, { type, payload }) => {
     case REDUCER_TYPES.CLOSE_NEW_TASK_MODAL:
       return { ...state, showAddTaskModal: false, newTaskListId: null };
     case REDUCER_TYPES.OPEN_EDIT_TASK_MODAL:
-      return { ...state, showEditTaskModal: true, editTaskId: payload };
+      return { ...state, showEditTaskModal: true, taskToUpdate: payload };
     case REDUCER_TYPES.CLOSE_EDIT_TASK_MODAL:
-      return { ...state, showEditTaskModal: false, editTaskId: null };
+      return { ...state, showEditTaskModal: false, taskToUpdate: {} };
     default:
       return state;
   }

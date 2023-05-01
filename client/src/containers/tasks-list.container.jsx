@@ -17,12 +17,13 @@ export const TasksList = ({ title, id }) => {
       </div>
       <div className="flex grow flex-col gap-1 overflow-auto scroll-smooth p-1">
         {tasks?.length &&
-          tasks.map(({ id, title, description }) => (
+          tasks.map(({ id, title, listId, description }) => (
             <TaskCard
               key={id}
               id={id}
               title={title}
               description={description}
+              listId={listId}
             />
           ))}
       </div>
