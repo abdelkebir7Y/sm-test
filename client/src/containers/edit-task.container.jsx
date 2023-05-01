@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { IoTrashOutline } from "react-icons/io5";
@@ -7,12 +8,18 @@ import { useUpdateTaskMutation } from "../api";
 
 import { Button, Input, Modal, Textarea } from "../components";
 import { AppContext } from "../contexts";
+import { DeleteTask } from "./delete-task.container";
 
 export const EditTask = () => {
   const { showEditTaskModal, closeEditTaskModal, taskToUpdate } =
     useContext(AppContext);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const queryClient = useQueryClient();
   const updateTaskMutation = useUpdateTaskMutation();
+
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
 
   const {
     register,
@@ -73,9 +80,16 @@ export const EditTask = () => {
           <Button
             icon={<IoTrashOutline size={24} className="text-white" />}
             className="mt-3 flex justify-center bg-red-500  hover:bg-red-600 "
+            onClick={toggleDeleteModal}
+            type="button"
           />
         </div>
       </form>
+      <DeleteTask
+        taskId={taskToUpdate.id}
+        visible={showDeleteModal}
+        close={toggleDeleteModal}
+      />
     </Modal>
   );
 };
