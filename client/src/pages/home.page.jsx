@@ -9,7 +9,9 @@ export const Home = () => {
   return (
     <div className="relative flex h-full w-full items-center  justify-center gap-2 bg-green-50 px-10 font-sans">
       {lists?.length &&
-        lists.map(({ title, id }) => <TasksList key={id} title={title} />)}
+        lists.map(({ title, id }) => (
+          <TasksList key={id} id={id} title={title} />
+        ))}
       <AddTask />
       <EditTask />
     </div>
