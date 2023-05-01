@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoAddOutline } from "react-icons/io5";
 
 import { Button, TaskCard } from "../components";
 
+import { AppContext } from "../contexts";
+
 export const TasksList = ({ title }) => {
+  const { toggleAddTaskModal } = useContext(AppContext);
+
   return (
     <div className="flex h-5/6 w-72 flex-col rounded-2xl bg-white px-1 py-3 shadow-xl">
       <div className="border-b pb-2">
@@ -19,6 +23,7 @@ export const TasksList = ({ title }) => {
         <Button
           icon={<IoAddOutline size={24} className="mr-2 text-white" />}
           text="Add a card"
+          onClick={toggleAddTaskModal}
         ></Button>
       </div>
     </div>
