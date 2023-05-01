@@ -5,10 +5,10 @@ import { Button, Input, Modal, Textarea } from "../components";
 import { AppContext } from "../contexts";
 
 export const AddTask = () => {
-  const { showAddTaskModal, toggleAddTaskModal } = useContext(AppContext);
+  const { showAddTaskModal, closeAddTaskModal } = useContext(AppContext);
 
   return (
-    <Modal visible={showAddTaskModal} close={toggleAddTaskModal}>
+    <Modal visible={showAddTaskModal} close={closeAddTaskModal}>
       <Input placeholder="title" label="Title" />
       <Textarea
         placeholder="description"
