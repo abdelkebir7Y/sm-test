@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 const routes = require("./routes");
@@ -20,10 +21,10 @@ module.exports = (config) => {
     });
   }
 
+  app.use(cors());
   app.use(express.json());
   app.use("/", routes({ tasksService, statusService }));
 
-  // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {
     res.status(error.status || 500);
     // Log out the error to the console
