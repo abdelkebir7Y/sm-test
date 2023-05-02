@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const routes = require("./routes");
 
-const TasksService = require("./services/task-service");
+const TasksService = require("./services/task");
 
 module.exports = (config) => {
   const log = config.log();
