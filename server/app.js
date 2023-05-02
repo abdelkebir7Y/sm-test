@@ -4,11 +4,13 @@ const app = express();
 const routes = require("./routes");
 
 const TasksService = require("./services/task");
+const StatusService = require("./services/status");
 
 module.exports = (config) => {
   const log = config.log();
 
   const tasksService = new TasksService();
+  const statusService = new StatusService();
 
   // Add a request logging middleware in development mode
   if (app.get("env") === "development") {
@@ -19,7 +21,7 @@ module.exports = (config) => {
   }
 
   app.use(express.json());
-  app.use("/", routes({ tasksService }));
+  app.use("/", routes({ tasksService, statusService }));
 
   // eslint-disable-next-line no-unused-vars
   app.use((error, req, res, next) => {

@@ -1,4 +1,4 @@
-class TodoService {
+class TaskService {
   #tasks = [
     {
       id: 1,
@@ -55,4 +55,4 @@ class TodoService {
   }
 }
 
-module.exports = TodoService;
+module.exports = TaskService;
