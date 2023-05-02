@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getQueryKey } from "../common/utils";
 
-const GET_LISTS_URL = "http://localhost:4000/lists";
+const GET_LISTS_URL = "http://localhost:4000/status";
 
 const getLists = (signal) => {
   return fetch(GET_LISTS_URL, {
