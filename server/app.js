@@ -18,6 +18,7 @@ module.exports = (config) => {
     });
   }
 
+  app.use(express.json());
   app.use("/", routes({ tasksService }));
 
   // eslint-disable-next-line no-unused-vars
