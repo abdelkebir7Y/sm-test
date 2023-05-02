@@ -7,9 +7,9 @@ const TaskService = require("../../services/task");
 module.exports = (config) => {
   const taskService = new TaskService(config.db.client);
 
-  router.get("/", async (req, res, next) => {
+  router.get("/all", async (req, res, next) => {
     try {
-      const tasks = await taskService.getTask();
+      const tasks = await taskService.getAllTasks();
       return res.json(tasks);
     } catch (err) {
       return next(err);
@@ -19,7 +19,7 @@ module.exports = (config) => {
   router.post("/", async (req, res, next) => {
     try {
       const { title, description } = req.body;
-      const task = await taskService.addTask(title, description);
+      const task = await taskService.createTask(title, description);
       return res.json(task);
     } catch (err) {
       return next(err);

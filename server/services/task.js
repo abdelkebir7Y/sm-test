@@ -1,43 +1,19 @@
 const Models = require("../models");
 
 class TaskService {
-  #tasks = [
-    {
-      id: 1,
-      title: "Laborum tempor ",
-      description: "Id occaecat Lorem ea exercitation eu est.",
-      listId: 1,
-      createAt: new Date(),
-      updateAt: new Date(),
-    },
-    {
-      id: 2,
-      title: "Non aliquip consectetur ",
-      description:
-        "Sunt eiusmod ex laborum sunt enim excepteur proident fugiat aliqua laboris.",
-      listId: 3,
-      createAt: new Date(),
-      updateAt: new Date(),
-    },
-    {
-      id: 3,
-      title: "Quis ad dolor",
-      description:
-        "Labore id adipisicing reprehenderit ut nisi non esse incididunt tempor magna.",
-      listId: 2,
-      createAt: new Date(),
-      updateAt: new Date(),
-    },
-  ];
-
   constructor(sequelize) {
     Models(sequelize);
     this.client = sequelize;
     this.models = sequelize.models;
   }
 
-  async getTask() {
-    return this.#tasks;
+  async getAllTasks() {
+    try {
+      const tasks = await this.models.Task.findAll();
+      return tasks;
+    } catch (err) {
+      return err;
+    }
   }
 
   async createTask(title, description) {
@@ -49,16 +25,22 @@ class TaskService {
     }
   }
 
-  async deleteTask(id) {
-    const filteredTasks = this.#tasks.filter((task) => task.id !== id);
-    this.#tasks = filteredTasks;
-    return id;
+  async updateTask(id, title, description) {
+    try {
+      await this.models.Task.update({ title, description }, { where: { id } });
+      return "ok";
+    } catch (err) {
+      return err;
+    }
   }
 
-  async updateTask(id, title, description, listId) {
-    const taskIndex = this.#tasks.findIndex((task) => task.id === id);
-    this.#tasks[taskIndex] = { id, title, description, listId };
-    return this.#tasks[taskIndex];
+  async deleteTask(id) {
+    try {
+      await this.models.Task.destroy({ where: { id } });
+      return "ok";
+    } catch (err) {
+      return err;
+    }
   }
 }
 
