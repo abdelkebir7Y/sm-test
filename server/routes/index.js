@@ -5,13 +5,13 @@ const router = express.Router();
 const tasksRoute = require("./tasks");
 const statusRoute = require("./status");
 
-module.exports = (params) => {
+module.exports = (config) => {
   router.get("/", (req, res) => {
     res.send("Home Page");
   });
 
-  router.use("/task", tasksRoute(params.tasksService));
-  router.use("/status", statusRoute(params.statusService));
+  router.use("/task", tasksRoute(config));
+  router.use("/status", statusRoute(config));
 
   return router;
 };

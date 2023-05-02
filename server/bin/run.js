@@ -4,20 +4,24 @@ const Sequelize = require("sequelize");
 const config = require("../config")[process.env.NODE_ENV || "development"];
 
 const log = config.log();
-const app = require("../app")(config);
 
 const connectToDatabase = function () {
-  log.debug(config.db.options);
   const sequelize = new Sequelize(config.db.options);
   sequelize
     .authenticate()
-    .then(log.info("Connection has been established successfully."))
-    .catch((error) => log.error("Unable to connect to the database:", error));
+    .then(() => log.info("Connection has been established successfully."))
+    .catch((error) => {
+      log.error("Unable to connect to the database:", error);
+      process.exit();
+    });
   return sequelize;
 };
 
 const dbClient = connectToDatabase();
+
 config.db.client = dbClient;
+
+const app = require("../app")(config);
 
 const server = http.createServer(app);
 

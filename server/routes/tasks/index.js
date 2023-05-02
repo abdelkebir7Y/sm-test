@@ -2,7 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 
-module.exports = (taskService) => {
+const TaskService = require("../../services/task");
+
+module.exports = (config) => {
+  const taskService = new TaskService(config.db.client);
+
   router.get("/", async (req, res, next) => {
     try {
       const tasks = await taskService.getTask();

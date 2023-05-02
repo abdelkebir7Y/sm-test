@@ -1,3 +1,5 @@
+const Models = require("../models");
+
 class TaskService {
   #tasks = [
     {
@@ -28,18 +30,23 @@ class TaskService {
     },
   ];
 
+  constructor(sequelize) {
+    Models(sequelize);
+    this.client = sequelize;
+    this.models = sequelize.models;
+  }
+
   async getTask() {
     return this.#tasks;
   }
 
-  async addTask(title, description) {
-    this.#tasks.push({
-      id: this.#tasks.length + 1,
-      listId: 1,
-      title,
-      description,
-    });
-    return this.#tasks[this.#tasks.length - 1];
+  async createTask(title, description) {
+    try {
+      const task = await this.models.Task.create({ title, description });
+      return task;
+    } catch (err) {
+      return err;
+    }
   }
 
   async deleteTask(id) {
