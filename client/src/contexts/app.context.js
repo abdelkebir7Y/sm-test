@@ -12,16 +12,15 @@ const REDUCER_TYPES = {
 const initialState = {
   showAddTaskModal: false,
   showEditTaskModal: false,
-  newTaskListId: null,
   taskToUpdate: {},
 };
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case REDUCER_TYPES.OPEN_NEW_TASK_MODAL:
-      return { ...state, showAddTaskModal: true, newTaskListId: payload };
+      return { ...state, showAddTaskModal: true };
     case REDUCER_TYPES.CLOSE_NEW_TASK_MODAL:
-      return { ...state, showAddTaskModal: false, newTaskListId: null };
+      return { ...state, showAddTaskModal: false };
     case REDUCER_TYPES.OPEN_EDIT_TASK_MODAL:
       return { ...state, showEditTaskModal: true, taskToUpdate: payload };
     case REDUCER_TYPES.CLOSE_EDIT_TASK_MODAL:
@@ -34,16 +33,16 @@ const reducer = (state = initialState, { type, payload }) => {
 export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const openNewTaskModal = (listId) => () => {
-    dispatch({ type: REDUCER_TYPES.OPEN_NEW_TASK_MODAL, payload: listId });
+  const openNewTaskModal = () => {
+    dispatch({ type: REDUCER_TYPES.OPEN_NEW_TASK_MODAL });
   };
 
   const closeNewTaskModal = () => {
     dispatch({ type: REDUCER_TYPES.CLOSE_NEW_TASK_MODAL });
   };
 
-  const openEditTaskModal = (taskId) => () => {
-    dispatch({ type: REDUCER_TYPES.OPEN_EDIT_TASK_MODAL, payload: taskId });
+  const openEditTaskModal = (task) => () => {
+    dispatch({ type: REDUCER_TYPES.OPEN_EDIT_TASK_MODAL, payload: task });
   };
 
   const closeEditTaskModal = () => {

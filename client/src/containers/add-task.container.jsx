@@ -10,8 +10,7 @@ import { Button, Input, Modal, Textarea } from "../components";
 import { AppContext } from "../contexts";
 
 export const AddTask = () => {
-  const { showAddTaskModal, closeNewTaskModal, newTaskListId } =
-    useContext(AppContext);
+  const { showAddTaskModal, closeNewTaskModal } = useContext(AppContext);
   const queryClient = useQueryClient();
   const addTaskMutation = useAddTaskMutation();
 
@@ -27,7 +26,6 @@ export const AddTask = () => {
       {
         title,
         description,
-        listId: newTaskListId,
       },
       {
         onSuccess() {

@@ -33,7 +33,7 @@ export const EditTask = () => {
       {
         title,
         description,
-        listId: taskToUpdate.listId,
+        status: taskToUpdate.status,
         id: taskToUpdate.id,
       },
       {

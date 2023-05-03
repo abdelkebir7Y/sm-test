@@ -10,14 +10,14 @@ const getTasks = (signal) => {
   }).then((res) => res.json());
 };
 
-const selectTasksByListId = (listId) => (tasks) => {
-  const filteredTask = tasks.filter((task) => task.listId === listId);
+const selectTasksByStatus = (status) => (tasks) => {
+  const filteredTask = tasks.filter((task) => task.status === status);
   return filteredTask;
 };
 
-export const useTasksQuery = (listId) => {
+export const useTasksQuery = (status) => {
   const queryKey = getQueryKey("tasks");
   return useQuery(queryKey, ({ signal }) => getTasks(signal), {
-    select: selectTasksByListId(listId),
+    select: selectTasksByStatus(status),
   });
 };

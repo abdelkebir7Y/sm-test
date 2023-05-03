@@ -9,7 +9,9 @@ class TaskService {
 
   async getAllTasks() {
     try {
-      const tasks = await this.models.Task.findAll();
+      const tasks = await this.models.Task.findAll({
+        order: [["createdAt", "ASC"]],
+      });
       return tasks;
     } catch (err) {
       return err;
@@ -25,9 +27,12 @@ class TaskService {
     }
   }
 
-  async updateTask(id, title, description) {
+  async updateTask(id, title, description, status) {
     try {
-      await this.models.Task.update({ title, description }, { where: { id } });
+      await this.models.Task.update(
+        { title, description, status },
+        { where: { id } }
+      );
       return "ok";
     } catch (err) {
       return err;

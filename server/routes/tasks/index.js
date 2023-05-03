@@ -28,8 +28,8 @@ module.exports = (config) => {
 
   router.put("/", async (req, res, next) => {
     try {
-      const { id, title, description, listId } = req.body;
-      const task = await taskService.updateTask(id, title, description, listId);
+      const { id, title, description, status } = req.body;
+      const task = await taskService.updateTask(id, title, description, status);
       return res.json(task);
     } catch (err) {
       return next(err);

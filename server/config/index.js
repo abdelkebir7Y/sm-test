@@ -12,9 +12,6 @@ const getLogger = (serviceName, serviceVersion, level) =>
 // Configuration options for different environments
 module.exports = {
   development: {
-    name,
-    version,
-    serviceTimeout: 30,
     db: {
       options: {
         host: "localhost",
@@ -30,9 +27,6 @@ module.exports = {
     log: () => getLogger(name, version, "debug"),
   },
   production: {
-    name,
-    version,
-    serviceTimeout: 30,
-    log: () => getLogger(name, version, "info"),
+    //options for production
   },
 };

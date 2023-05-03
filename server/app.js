@@ -7,6 +7,8 @@ const routes = require("./routes");
 module.exports = (config) => {
   const log = config.log();
 
+  app.use(cors());
+  app.use(express.json());
   // Add a request logging middleware in development mode
   if (app.get("env") === "development") {
     app.use((req, res, next) => {
@@ -15,8 +17,6 @@ module.exports = (config) => {
     });
   }
 
-  app.use(cors());
-  app.use(express.json());
   app.use("/", routes(config));
 
   app.use((error, req, res, next) => {

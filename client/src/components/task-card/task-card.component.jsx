@@ -6,23 +6,28 @@ import {
   IoArrowForwardSharp,
 } from "react-icons/io5";
 import { useUpdateTaskMutation } from "../../api";
+import { STATUS_VARIANT } from "../../constant";
 
 import { AppContext } from "../../contexts";
 
 import { Button } from "../button/button.component";
 
-export const TaskCard = ({ id, listId, title, description }) => {
+export const TaskCard = ({ id, status, title, description }) => {
   const { openEditTaskModal } = useContext(AppContext);
 
   const queryClient = useQueryClient();
   const updateTaskMutation = useUpdateTaskMutation();
 
   const moveToNextList = () => {
+    const nextStatus =
+      status === STATUS_VARIANT.toDo
+        ? STATUS_VARIANT.inProgress
+        : STATUS_VARIANT.done;
     updateTaskMutation.mutate(
       {
         title,
         description,
-        listId: listId + 1,
+        status: nextStatus,
         id: id,
       },
       {
@@ -34,11 +39,15 @@ export const TaskCard = ({ id, listId, title, description }) => {
   };
 
   const moveToPreviousList = () => {
+    const prevStatus =
+      status === STATUS_VARIANT.done
+        ? STATUS_VARIANT.inProgress
+        : STATUS_VARIANT.toDo;
     updateTaskMutation.mutate(
       {
         title,
         description,
-        listId: listId - 1,
+        status: prevStatus,
         id: id,
       },
       {
@@ -56,7 +65,7 @@ export const TaskCard = ({ id, listId, title, description }) => {
         <IoCreate
           size={24}
           className="cursor-pointer text-gray-700 hover:scale-125 hover:text-gray-900"
-          onClick={openEditTaskModal({ id, title, listId, description })}
+          onClick={openEditTaskModal({ id, title, status, description })}
         />
       </div>
       <div className="mb-1 border-b" />
@@ -66,7 +75,7 @@ export const TaskCard = ({ id, listId, title, description }) => {
       <div className="invisible h-0 group-hover:visible group-hover:h-auto">
         <div className="mt-1 border-b" />
         <div className="flex justify-between">
-          {listId !== 1 ? (
+          {status !== STATUS_VARIANT.toDo ? (
             <Button
               onClick={moveToPreviousList}
               icon={<IoArrowBackSharp size={20} />}
@@ -75,7 +84,7 @@ export const TaskCard = ({ id, listId, title, description }) => {
           ) : (
             <div />
           )}
-          {listId !== 3 ? (
+          {status !== STATUS_VARIANT.done ? (
             <Button
               onClick={moveToNextList}
               icon={<IoArrowForwardSharp size={20} />}
